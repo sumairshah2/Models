@@ -1,0 +1,51 @@
+---
+title: "HR_Model"
+author: "Sumair Shah"
+date: "12/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+pacman::p_load(tidyverse,dplyr,ggplot2,lubridate,skimr,mlogit,tidymodels,RSQLite,XML,RPostgreSQL,DBI,RMySQL)
+
+
+
+
+```
+
+## R Markdown
+
+``` {r get data}
+psql <- dbDriver("PostgreSQL")
+pcon <- dbConnect(psql,dbname = "Shah",host = "127.0.0.1",port = 5433,user = 'postgres',password = "Boras21")
+
+
+library(RMySQL)
+
+```
+
+
+```{r push the data}
+# list the tables
+dbListTables(pcon)
+#from the pitch table we can read in 2020 data to start 
+stat_data <- dbGetQuery(pcon,"SELECT * from fangraphs_hit")
+# get player id's to join on to
+chadwick <- dbGetQuery(pcon,"Select name_first,name_last,key_mlbam,key_bbref,key_fangraphs from chadwick where pro_played_first > 1990")
+xwoba <- dbGetQuery(pcon,"Select")
+
+#close connection
+```
+
+
+```{r join data and add in Batted Ball Data}
+#convert player id to numeric for now to join on
+stat_data$playerid <- as.numeric(stat_data$playerid)
+#inner join data frame to get id's to join on batted ball from baseball savant 
+df <- inner_join(stat_data,chadwick,by = c("playerid" = "key_fangraphs"))
+stats <- inner_join(df,chadwick,by = )
+
+
+
+
+```

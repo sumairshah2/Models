@@ -1,0 +1,42 @@
+---
+title: "HR_Model"
+author: "Sumair Shah"
+date: "12/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+pacman::p_load(tidyverse,dplyr,ggplot2,lubridate,skimr,mlogit,tidymodels,RSQLite,XML,RPostgreSQL,DBI)
+
+data <- read.csv("data.csv")
+str(data)
+skim(data)
+
+
+```
+
+## R Markdown
+
+``` {r select data,include = FALSE}
+
+data %>% select(playerid,Name,Team,Season,AB,PA,Age,HR,R,RBI,BB,IBB,SO,HBP,SF,SH,GDP,SB,CS,AVG,GB,LD,FB,BB_pct,K_pct,OBP,SLG,OPS,ISO,BABIP,GB_FB,LD_pct,LD,GB,K_pct,GB_FB,LD_pct,barrels,brl_percent,brl_pa,max_distance,max_hit_speed,avg_hit_angle,avg_hit_speed,avg_distance,bip,est_woba)
+
+
+
+```
+
+
+```{r a couple of scatter plots}
+ggplot(data = data, aes(x = SO, y = HR,color = AB)) + geom_point() + ggtitle("HR vs SO")
+ggplot(data = data,aes(x = BB, y = HR,color = AB)) + geom_point() + ggtitle("HR vs BB")
+ggplot(data = data,aes(x = avg_hit_speed, y = HR,color = AB)) + geom_point()
+ggplot(data = data,aes(x = max_hit_speed, y = HR,color = AB)) + geom_point()
+```
+
+
+```{r join data and add in Batted Ball Data}
+
+
+
+
+```
